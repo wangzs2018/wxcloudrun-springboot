@@ -1,5 +1,8 @@
 package com.tencent.wxcloudrun.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.tencent.wxcloudrun.model.MessageReq;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.tencent.wxcloudrun.config.ApiResponse;
@@ -20,7 +23,7 @@ import java.util.List;
  * counter控制器
  */
 @RestController
-
+@Slf4j
 public class CounterController {
 
     final CounterService counterService;
@@ -83,7 +86,11 @@ public class CounterController {
     }
 
     @PostMapping(value = "/guoquan/messages")
-    void receiveMessages(){
-
+    String receiveMessages(MessageReq messageReq){
+        log.info("/guoquan/messages 入参:{}", JSON.toJSONString(messageReq));
+        if(messageReq.getAction().equals("CheckContainerPath")){
+            return "success";
+        }
+        return "";
     }
 }
